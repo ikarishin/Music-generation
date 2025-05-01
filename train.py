@@ -10,11 +10,11 @@ from keras.utils import to_categorical
 
 def create_network(output_dim, input_shape):
     model = Sequential()
-    model.add(LSTM(256, input_shape=input_shape, return_sequences=True))
-    model.add(LSTM(256))
+    model.add(LSTM(512, input_shape=input_shape, return_sequences=True))
+    model.add(LSTM(512))
     model.add(BatchNorm())
     model.add(Dropout(0.3))
-    model.add(Dense(128, activation='relu'))
+    model.add(Dense(256, activation='relu'))
     model.add(BatchNorm())
     model.add(Dropout(0.3))
     model.add(Dense(output_dim, activation='softmax'))
