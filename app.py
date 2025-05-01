@@ -1,5 +1,5 @@
 import streamlit as st
-from generate_music_plus import generate_music_plus  # function used to generate music
+from generate_music_plus import generate_music  # function used to generate music
 
 # page title
 st.title("🎵 AI music generator 🎵")
