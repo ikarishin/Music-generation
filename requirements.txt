@@ -1,5 +1,0 @@
-tensorflow>=2.10
-keras>=2.10
-music21>=6.0
-numpy>=1.19
-streamlit>=1.20
