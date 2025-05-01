@@ -3,6 +3,7 @@ import pickle
 import numpy as np
 from music21 import note, chord, stream, instrument
 from keras.models import load_model
+from train import create_network
 
 def sample_with_temperature(preds, temperature=1.0):
     preds = np.asarray(preds).astype("float64")
