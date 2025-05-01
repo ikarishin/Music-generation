@@ -1,7 +1,5 @@
 import os
 import pickle
-from keras.models import Sequential
-from keras.layers import LSTM, Dense, Dropout, Activation, BatchNormalization as BatchNorm
 
 def create_network(input_shape, n_pitch):
     model = Sequential()
