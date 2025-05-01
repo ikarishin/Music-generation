@@ -3,7 +3,6 @@ from generate_music_plus import generate_music_plus
 import shutil
 import os
 
-st.write("📁 Files in /data:", os.listdir("data"))
 
 st.set_page_config(page_title="🎵 AI Music Generator", layout="centered")
 
