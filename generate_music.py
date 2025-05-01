@@ -79,4 +79,4 @@ def generate_music():
     create_midi(output)
 
 if __name__ == "__main__":
-    generate_music()...
+    generate_music()
