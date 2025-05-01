@@ -3,7 +3,7 @@ import pickle
 import numpy as np
 from music21 import note, chord, stream, instrument
 from keras.models import load_model
-from train import create_network
+from model import create_network
 
 def sample_with_temperature(preds, temperature=1.0):
     preds = np.asarray(preds).astype("float64")
@@ -12,21 +12,20 @@ def sample_with_temperature(preds, temperature=1.0):
     preds = exp_preds / np.sum(preds)
     return np.random.choice(len(preds), p=preds)
 
-def generate_music_plus():
+def generate_music():
     with open("data/notes_dual", "rb") as f:
         notes = pickle.load(f)
 
-    with open("data/pitches.pkl", "rb") as f:
-        pitches = pickle.load(f)
-    with open("data/durations.pkl", "rb") as f:
-        durations = pickle.load(f)
-
+    pitches = sorted(set(n[0] for n in notes))
+    durations = sorted(set(n[1] for n in notes))
     pitch_to_int = {p: i for i, p in enumerate(pitches)}
     dur_to_int = {d: i for i, d in enumerate(durations)}
     int_to_pitch = {i: p for p, i in pitch_to_int.items()}
     int_to_dur = {i: d for d, i in dur_to_int.items()}
 
     sequence_length = 100
+    if len(notes) <= sequence_length:
+        raise ValueError("Too few notes for generation.")
     pitch_seq = [pitch_to_int[n[0]] for n in notes[:sequence_length]]
     dur_seq = [dur_to_int[n[1]] for n in notes[:sequence_length]]
     pattern = [[p / len(pitches), d / len(durations)] for p, d in zip(pitch_seq, dur_seq)]
@@ -42,6 +41,7 @@ def generate_music_plus():
     output = []
     for _ in range(300):
         input_seq = np.reshape(pattern, (1, len(pattern), 2))
+
         pitch_prediction = model_pitch.predict(input_seq, verbose=0)
         dur_prediction = model_dur.predict(input_seq, verbose=0)
 
