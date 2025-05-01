@@ -1,5 +1,4 @@
 import streamlit as st
-import subprocess
 import os
 from generate_music import generate_music
 
@@ -7,13 +6,11 @@ st.set_page_config(page_title="🎼 LSTM Music Generator", layout="centered")
 st.title("🎼 LSTM-Based Music Generator")
 
 st.markdown("""
-Welcome to the LSTM Music Generator 🎹  
-This tool lets you generate new piano music using a pre-trained LSTM model.  
-Make sure the file `weights/weights-best.keras` exists (i.e. you've trained the model).  
-Then click the button below to generate music.
+This tool generates piano music using a pre-trained LSTM model.  
+Make sure the model is trained and weights exist in `weights/weights-pitch.keras` and `weights/weights-duration.keras`.  
+Click the button below to generate music.
 """)
 
-# Generate button
 if st.button("🎶 Generate Music"):
     with st.spinner("Generating music... please wait."):
         try:
@@ -29,7 +26,7 @@ if st.button("🎶 Generate Music"):
                         mime="audio/midi"
                     )
             else:
-                st.warning("MIDI file was not found after generation.")
+                st.warning("MIDI file not found after generation.")
         except Exception as e:
-            st.error("An error occurred during generation.")
+            st.error("An error occurred during music generation.")
             st.text(str(e))
