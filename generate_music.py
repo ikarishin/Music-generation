@@ -1,6 +1,5 @@
 import os
 import pickle
-from music21 import instrument, note, chord, stream
 from keras.models import Sequential
 from keras.layers import LSTM, Dense, Dropout, Activation, BatchNormalization as BatchNorm
 
