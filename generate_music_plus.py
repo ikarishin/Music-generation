@@ -12,7 +12,7 @@ def sample_with_temperature(preds, temperature=1.0):
     preds = exp_preds / np.sum(preds)
     return np.random.choice(len(preds), p=preds)
 
-def generate_music():
+def generate_music_plus():
     with open("data/notes_dual", "rb") as f:
         notes = pickle.load(f)
 
