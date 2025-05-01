@@ -4,6 +4,7 @@ import numpy as np
 from music21 import note, chord, stream, instrument
 from keras.models import load_model
 from train import create_network
+import requests
 
 def sample_with_temperature(preds, temperature=1.0):
     preds = np.asarray(preds).astype("float64")
@@ -32,6 +33,20 @@ def generate_music_plus():
 
     model_pitch = create_network(len(pitches), (sequence_length, 2))
     model_dur = create_network(len(durations), (sequence_length, 2))
+
+    def download_if_needed(url, path):
+        if not os.path.exists(path):
+            os.makedirs(os.path.dirname(path), exist_ok=True)
+            r = requests.get(url)
+            with open(path, "wb") as f:
+                f.write(r.content)
+
+    download_if_needed("https://huggingface.co/datasets/ddzkflag/weights/resolve/main/weights-pitch.keras",
+                       "weights/weights-pitch.keras")
+
+    download_if_needed("https://huggingface.co/datasets/ddzkflag/weights/resolve/main/weights-duration.keras",
+                       "weights/weights-duration.keras")
+
     model_pitch.load_weights("weights/weights-pitch.keras")
     model_dur.load_weights("weights/weights-duration.keras")
 
