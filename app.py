@@ -1,5 +1,5 @@
 import streamlit as st
-from generate_music_plus import generate_music  # function used to generate music
+from generate_music_plus import generate_music_plus  # function used to generate music
 
 # page title
 st.title("🎵 AI music generator 🎵")
@@ -13,7 +13,7 @@ if st.button("Generating music 🎶"):
 
     for i in range(num):
         fname = f"music_{i+1}.mid"
-        generate_music(filename=fname)
+        generate_music_plus(filename=fname)
         st.success(f"{i+1} music have been generated：{fname}")
         with open(f"output/{fname}", "rb") as f:
             st.download_button(
