@@ -1,25 +1,31 @@
 import streamlit as st
-from generate_music_plus import generate_music_plus  # function used to generate music
+from generate_music_plus import generate_music_plus
+import shutil
+import os
 
-# page title
-st.title("🎵 AI music generator 🎵")
+st.set_page_config(page_title="🎵 AI Music Generator", layout="centered")
 
-# Type in: number of music to generate
-num = st.number_input("Number of music to generate？", min_value=1, max_value=10, value=1)
+st.title("🎼 AI Music Generator")
+st.markdown("Generate MIDI music using an LSTM-based AI model.")
 
-# Press button
-if st.button("Generating music 🎶"):
-    st.write("Generating needs time my friend...")
+num = st.number_input("How many songs do you want to generate?", min_value=1, max_value=10, value=1, step=1)
+
+if st.button("Generate 🎶"):
+    st.info("Please wait while the music is being generated...")
 
     for i in range(num):
-        fname = f"music_{i+1}.mid"
-        generate_music_plus(filename=fname)
-        st.success(f"{i+1} music have been generated：{fname}")
-        with open(f"output/{fname}", "rb") as f:
+        filename = f"music_{i+1}.mid"
+        generate_music_plus()  # Always generates output/generated_music.mid
+
+        os.makedirs("output_multi", exist_ok=True)
+        shutil.copy("output/generated_music.mid", f"output_multi/{filename}")
+
+        st.success(f"✅ Generated: {filename}")
+        with open(f"output_multi/{filename}", "rb") as f:
             st.download_button(
-                label=f"Download music_{i+1}.midi",
+                label=f"Download {filename}",
                 data=f,
-                file_name=fname,
+                file_name=filename,
                 mime="audio/midi"
             )
 
