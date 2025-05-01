@@ -84,4 +84,4 @@ def train_model():
     model.fit(network_input, network_output, epochs=200, batch_size=64, callbacks=[checkpoint])
 
 if __name__ == "__main__":
-    train_model()...
+    train_model()
