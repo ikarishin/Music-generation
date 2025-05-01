@@ -3,6 +3,8 @@ import pickle
 import numpy as np
 from music21 import note, chord, stream, instrument
 from train import create_network
+from keras.models import Sequential
+from keras.layers import LSTM, Dense, Dropout, Activation, BatchNormalization as BatchNorm
 
 def create_network(input_shape, n_pitch):
     model = Sequential()
