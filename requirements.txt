@@ -1,0 +1,6 @@
+streamlit
+numpy
+music21
+keras
+tensorflow
+pickle-mixin
